@@ -83,7 +83,7 @@ where to look for certain things:
 npm install image-metadata-editor
 ```
 
-Head to https://pypi.org/project/image-metadata-editor/ for more info
+Head to https://www.npmjs.com/package/image-metadata-editor/ for more info
 
 ## Download Project
 

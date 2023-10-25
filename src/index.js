@@ -69,10 +69,15 @@ export function writePNGtext(image, key, value, mode="tEXt") {
  * @returns {Uint8Array} - Updated Uint8Array.
  *
  * @throws {TypeError} If a non JPG image is used
+ * @throws {TypeError} If a marker is invalid
  */
 export function writeJPGMarker(image, value, marker=[0xff, 0xfe]) {
 	if (getMimeType(image) !== "image/jpeg") {
 	  throw new TypeError("A JPG is required to use writeJPGCOM");
+	}
+
+	if (marker[0] !== 0xff) {
+		throw new TypeError("Invalid Marker");
 	}
 
 	const valueBytes = new TextEncoder().encode(value);

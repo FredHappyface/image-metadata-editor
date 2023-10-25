@@ -21,3 +21,6 @@ print(img.info["comment"])
 
 img = load_image("./test/output_xmp.jpg")
 print(img.getxmp())
+
+img = load_image("./test/output_xmp.webp")
+print(img.getxmp())

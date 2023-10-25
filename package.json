@@ -31,7 +31,7 @@
 	"homepage": "https://github.com/FredHappyface/image-metadata-editor#readme",
 	"devDependencies": {
 		"@babel/preset-env": "^7.23.2",
-		"babel-core": "^6.26.3",
+		"babel-core": "^4.7.16",
 		"babel-preset-env": "^1.7.0",
 		"chai": "^4.3.10",
 		"mocha": "^10.2.0",
@@ -43,6 +43,7 @@
 	"dependencies": {
 		"crc-32": "^1.2.2",
 		"fast-xml-parser": "^4.3.2",
+		"node-webpmux": "^3.1.9",
 		"pako": "^2.1.0"
 	}
 }

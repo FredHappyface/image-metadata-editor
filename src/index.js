@@ -2,6 +2,7 @@ import pkg from "crc-32";
 const { buf } = pkg;
 import fastXmlParser from "fast-xml-parser";
 import pako from "pako";
+import WebP from "node-webpmux";
 
 /**
  * Writes tEXt metadata to a PNG Uint8Array.
@@ -13,25 +14,25 @@ import pako from "pako";
  * @throws {TypeError} If a non PNG image is used
  * @throws {TypeError} If using an unsupported text mode
  */
-export function writePNGtext(image, key, value, mode="tEXt") {
+export function writePNGtext(image, key, value, mode = "tEXt") {
   if (getMimeType(image) !== "image/png") {
     throw new TypeError("A PNG is required to use writePNGtEXt");
   }
 
-  if (!["tEXt", "zTXt"].includes(mode)){
+  if (!["tEXt", "zTXt"].includes(mode)) {
     throw new TypeError("Unsupported text mode");
   }
 
   var keyValue = `${key}\0${value}`;
   var keyValueBytes = new TextEncoder().encode(keyValue);
 
-  if (mode === "zTXt"){
-	pako.deflate(value)
-	const keyBytes = new TextEncoder().encode(`${key}\0\0`)
-	const ValueBytes = pako.deflate(value)
-	var keyValueBytes = new Uint8Array(keyBytes.length + ValueBytes.length);
-	keyValueBytes.set(keyBytes);
-	keyValueBytes.set(ValueBytes, keyBytes.length);
+  if (mode === "zTXt") {
+    pako.deflate(value);
+    const keyBytes = new TextEncoder().encode(`${key}\0\0`);
+    const ValueBytes = pako.deflate(value);
+    var keyValueBytes = new Uint8Array(keyBytes.length + ValueBytes.length);
+    keyValueBytes.set(keyBytes);
+    keyValueBytes.set(ValueBytes, keyBytes.length);
   }
 
   const tEXtKeyValue = new Uint8Array(keyValueBytes.length + 4);
@@ -71,34 +72,54 @@ export function writePNGtext(image, key, value, mode="tEXt") {
  * @throws {TypeError} If a non JPG image is used
  * @throws {TypeError} If a marker is invalid
  */
-export function writeJPGMarker(image, value, marker=[0xff, 0xfe]) {
-	if (getMimeType(image) !== "image/jpeg") {
-	  throw new TypeError("A JPG is required to use writeJPGCOM");
-	}
-
-	if (marker[0] !== 0xff) {
-		throw new TypeError("Invalid Marker");
-	}
-
-	const valueBytes = new TextEncoder().encode(value);
-	const tEXt = new Uint8Array(4 + valueBytes.length)
-	tEXt.set(marker, 0)
-	new DataView(tEXt.buffer).setUint16(2, valueBytes.length + 2, false);
-	tEXt.set(valueBytes, 4)
-
-	// Update the JPG
-	const insertPosition = 2;
-	const imgBytesBefore = image.slice(0, insertPosition);
-	const imgBytesAfter = image.slice(insertPosition);
-	const newJpg = new Uint8Array(
-	  imgBytesBefore.length + tEXt.length + imgBytesAfter.length
-	);
-	newJpg.set(imgBytesBefore);
-	newJpg.set(tEXt, imgBytesBefore.length);
-	newJpg.set(imgBytesAfter, imgBytesBefore.length + tEXt.length);
-
-	return newJpg;
+export function writeJPGMarker(image, value, marker = [0xff, 0xfe]) {
+  if (getMimeType(image) !== "image/jpeg") {
+    throw new TypeError("A JPG is required to use writeJPGCOM");
   }
+
+  if (marker[0] !== 0xff) {
+    throw new TypeError("Invalid Marker");
+  }
+
+  const valueBytes = new TextEncoder().encode(value);
+  const tEXt = new Uint8Array(4 + valueBytes.length);
+  tEXt.set(marker, 0);
+  new DataView(tEXt.buffer).setUint16(2, valueBytes.length + 2, false);
+  tEXt.set(valueBytes, 4);
+
+  // Update the JPG
+  const insertPosition = 2;
+  const imgBytesBefore = image.slice(0, insertPosition);
+  const imgBytesAfter = image.slice(insertPosition);
+  const newJpg = new Uint8Array(
+    imgBytesBefore.length + tEXt.length + imgBytesAfter.length
+  );
+  newJpg.set(imgBytesBefore);
+  newJpg.set(tEXt, imgBytesBefore.length);
+  newJpg.set(imgBytesAfter, imgBytesBefore.length + tEXt.length);
+
+  return newJpg;
+}
+
+/**
+ * Writes metadata to a Webp Uint8Array.
+ * @param {Uint8Array} image - The original Webp Uint8Array.
+ * @param {string} value - The metadata value.
+ * @returns {Uint8Array} - Updated Uint8Array.
+ *
+ * @throws {TypeError} If a non Webp image is used
+ * @throws {TypeError} If a marker is invalid
+ */
+export async function writeWebpXMP(image, value) {
+  if (getMimeType(image) !== "image/webp") {
+    throw new TypeError("A webp is required to use writeWebpXMP");
+  }
+  const img = new WebP.Image();
+  await img.load(image)
+	img.xmp = new TextEncoder().encode(value);
+	const data = await img.save(null, {xmp:true})
+	return data
+}
 
 /**
  * Writes EXIF metadata to an image Uint8Array.
@@ -110,7 +131,7 @@ export function writeJPGMarker(image, value, marker=[0xff, 0xfe]) {
  * @throws {TypeError} NotImplemented
  */
 export function writeExif(image, key, value) {
-    throw new TypeError("NotImplemented :(");
+  throw new TypeError("NotImplemented :(");
 }
 
 /**
@@ -134,7 +155,14 @@ export function writeXMP(image, value) {
     return writePNGtext(image, "XML:com.adobe.xmp", value);
   }
   if (getMimeType(image) === "image/jpeg") {
-    return writeJPGMarker(image, `http://ns.adobe.com/xap/1.0/\0${value}`, [0xff, 0xe1]);
+    return writeJPGMarker(
+      image,
+      `http://ns.adobe.com/xap/1.0/\0${value}`,
+      [0xff, 0xe1]
+    );
+  }
+  if (getMimeType(image) === "image/webp") {
+    return writeWebpXMP(image, value);
   }
   throw new TypeError("This image is not supported :(");
 }

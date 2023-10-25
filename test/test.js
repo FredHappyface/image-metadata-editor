@@ -91,33 +91,50 @@ describe("writeJPGCOM", () => {
     const value = "TestValue";
 
     try {
-
-	  const updatedUint8Array = await writeJPGMarker(testBuffer, value);
+      const updatedUint8Array = await writeJPGMarker(testBuffer, value);
 
       fs.writeFileSync(path.join("./test/output_com.jpg"), updatedUint8Array);
-
     } catch (error) {
       console.log("Test failed:", error);
-	  throw error;
+      throw error;
     }
   });
 });
 
 describe("writePNGXMP", () => {
-	it("should add XMP metadata to a JPEG Uint8Array", async () => {
-	  const testFilePath = path.join("./test/im.jpg");
-	  const testBuffer = fs.readFileSync(testFilePath);
-	  const value = '<x:xmpmeta xmlns:x="adobe:ns:meta/">TestValue</x:xmpmeta>';
+  it("should add XMP metadata to a JPEG Uint8Array", async () => {
+    const testFilePath = path.join("./test/im.jpg");
+    const testBuffer = fs.readFileSync(testFilePath);
+    const value = '<x:xmpmeta xmlns:x="adobe:ns:meta/">TestValue</x:xmpmeta>';
 
-	  try {
-		const updatedUint8Array = await writeXMP(testBuffer, value);
+    try {
+      const updatedUint8Array = await writeXMP(testBuffer, value);
 
-		fs.writeFileSync(path.join("./test/output_xmp.jpg"), updatedUint8Array);
+      fs.writeFileSync(path.join("./test/output_xmp.jpg"), updatedUint8Array);
 
-		expect(updatedUint8Array).to.be.an.instanceOf(Uint8Array);
-	  } catch (error) {
-		console.error("Test failed:", error);
-		throw error;
-	  }
-	});
+      expect(updatedUint8Array).to.be.an.instanceOf(Uint8Array);
+    } catch (error) {
+      console.error("Test failed:", error);
+      throw error;
+    }
   });
+});
+
+describe("writeWebpXMP", () => {
+  it("should add XMP metadata to a Webp Uint8Array", async () => {
+    const testFilePath = path.join("./test/im.webp");
+    const testBuffer = fs.readFileSync(testFilePath);
+    const value = '<x:xmpmeta xmlns:x="adobe:ns:meta/">TestValue</x:xmpmeta>';
+
+    try {
+      const updatedUint8Array = await writeXMP(testBuffer, value);
+
+      fs.writeFileSync(path.join("./test/output_xmp.webp"), updatedUint8Array);
+
+      expect(updatedUint8Array).to.be.an.instanceOf(Uint8Array);
+    } catch (error) {
+      console.error("Test failed:", error);
+      throw error;
+    }
+  });
+});

@@ -1,7 +1,17 @@
+/*
+ * run with `npx mocha`
+ */
+
 import fs from "fs";
 import path from "path";
 import { expect } from "chai";
-import { writeJPGMarker, writePNGtext, writeXMP } from "../src/index.js";
+import {
+  writeJPGMarker,
+  writePNGtext,
+  writeXMP,
+  readPNGtext,
+  readXMP,
+} from "../src/index.js";
 
 describe("writePNGtEXt", () => {
   it("should add tEXt metadata to a PNG Uint8Array", async () => {
@@ -16,6 +26,23 @@ describe("writePNGtEXt", () => {
       fs.writeFileSync(path.join("./test/output.png"), updatedUint8Array);
 
       expect(updatedUint8Array).to.be.an.instanceOf(Uint8Array);
+    } catch (error) {
+      console.error("Test failed:", error);
+      throw error;
+    }
+  });
+});
+
+describe("readPNGtext", () => {
+  it("should read tEXt metadata from a PNG Uint8Array", async () => {
+    const testFilePath = path.join("./test/output.png");
+    const testBuffer = fs.readFileSync(testFilePath);
+    const key = "TestKey";
+
+    try {
+      const value = await readPNGtext(testBuffer, key);
+
+      expect(value).to.equal("TestValue");
     } catch (error) {
       console.error("Test failed:", error);
       throw error;
@@ -41,6 +68,23 @@ describe("writePNGzTXt", () => {
       fs.writeFileSync(path.join("./test/output_zTXt.png"), updatedUint8Array);
 
       expect(updatedUint8Array).to.be.an.instanceOf(Uint8Array);
+    } catch (error) {
+      console.error("Test failed:", error);
+      throw error;
+    }
+  });
+});
+
+describe("readPNGzTXt", () => {
+  it("should read tEXt metadata from a PNG Uint8Array", async () => {
+    const testFilePath = path.join("./test/output_zTXt.png");
+    const testBuffer = fs.readFileSync(testFilePath);
+    const key = "TestKey";
+
+    try {
+      const value = await readPNGtext(testBuffer, key);
+
+      expect(value).to.equal("TestValue");
     } catch (error) {
       console.error("Test failed:", error);
       throw error;
@@ -138,3 +182,40 @@ describe("writeWebpXMP", () => {
     }
   });
 });
+
+describe("readPNGXMP", () => {
+  it("should read XMP metadata to a PNG Uint8Array", async () => {
+    const testFilePath = path.join("./test/output_xmp.png");
+    const testBuffer = fs.readFileSync(testFilePath);
+    const valueExpected =
+      '<x:xmpmeta xmlns:x="adobe:ns:meta/">TestValue</x:xmpmeta>';
+
+    try {
+      const value = await readXMP(testBuffer);
+
+      expect(value).to.equal(valueExpected);
+    } catch (error) {
+      console.error("Test failed:", error);
+      throw error;
+    }
+  });
+});
+
+
+describe("readWebpXMP", () => {
+	it("should read XMP metadata to a webp Uint8Array", async () => {
+	  const testFilePath = path.join("./test/output_xmp.webp");
+	  const testBuffer = fs.readFileSync(testFilePath);
+	  const valueExpected =
+		'<x:xmpmeta xmlns:x="adobe:ns:meta/">TestValue</x:xmpmeta>';
+
+	  try {
+		const value = await readXMP(testBuffer);
+
+		expect(value).to.equal(valueExpected);
+	  } catch (error) {
+		console.error("Test failed:", error);
+		throw error;
+	  }
+	});
+  });

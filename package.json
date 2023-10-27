@@ -1,11 +1,15 @@
 {
 	"type": "module",
 	"name": "image-metadata-editor",
-	"version": "2023.0.0",
+	"version": "2023.1.0",
 	"description": "image-metadata-editor package is a versatile and cross-compatible tool for reading and writing metadata in various image formats. Interact with the metadata stored within images, including EXIF (Exchangeable Image File Format) data, XMP (Extensible Metadata Platform) information, and tEXt chunks in PNGs ",
 	"main": "src/index.js",
 	"scripts": {
-		"build": "rollup -c"
+		"build": "npx tsc",
+		"test": "npx tsc && npx mocha && python3 ./getmeta.py",
+		"test-win": "npx tsc && npx mocha && py ./getmeta.py",
+		"docs": " npx typedoc --readme none --plugin typedoc-plugin-markdown --out documentation/reference src/index.ts",
+		"prepublish": "npm run build && npm run docs"
 	},
 	"repository": {
 		"type": "git",
@@ -29,15 +33,11 @@
 	},
 	"homepage": "https://github.com/FredHappyface/image-metadata-editor#readme",
 	"devDependencies": {
-		"@babel/preset-env": "^7.23.2",
-		"babel-core": "^4.7.16",
-		"babel-preset-env": "^1.7.0",
+		"@types/pako": "^2.0.2",
 		"chai": "^4.3.10",
-		"mocha": "^10.2.0",
-		"rollup": "^2.79.1",
-		"rollup-plugin-babel": "^4.4.0",
-		"rollup-plugin-commonjs": "^10.1.0",
-		"rollup-plugin-node-resolve": "^5.2.0"
+		"typedoc": "^0.25.2",
+		"typedoc-plugin-markdown": "^3.16.0",
+		"typescript": "^5.2.2"
 	},
 	"dependencies": {
 		"crc-32": "^1.2.2",

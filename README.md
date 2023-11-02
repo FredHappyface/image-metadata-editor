@@ -4,6 +4,9 @@
 [![License](https://img.shields.io/github/license/FredHappyface/image-metadata-editor?style=for-the-badge&cacheSeconds=28800)](/LICENSE.md)
 [![Commit activity](https://img.shields.io/github/commit-activity/m/FredHappyface/image-metadata-editor?style=for-the-badge&cacheSeconds=28800)](../../commits/master)
 [![Last commit](https://img.shields.io/github/last-commit/FredHappyface/image-metadata-editor?style=for-the-badge&cacheSeconds=28800)](../../commits/master)
+[![npm downloads per month](https://img.shields.io/npm/dm/image-metadata-editor?style=for-the-badge&cacheSeconds=28800)](https://www.npmjs.com/package/image-metadata-editor)
+[![npm total downloads](https://img.shields.io/npm/dt/image-metadata-editor?style=for-the-badge&cacheSeconds=28800&label=Total+Downloads)](https://www.npmjs.com/package/image-metadata-editor)
+[![npm version](https://img.shields.io/npm/v/image-metadata-editor?style=for-the-badge&cacheSeconds=28800)](https://www.npmjs.com/package/image-metadata-editor)
 
 <!-- omit in toc -->
 # image-metadata-editor

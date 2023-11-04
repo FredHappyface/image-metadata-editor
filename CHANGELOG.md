@@ -3,6 +3,10 @@
 All major and minor version changes will be documented in this file. Details of
 patch-level version changes can be found in [commit messages](../../commits/master).
 
+## 2023.1.1 - 2023/11/04
+
+- ES6 module + Commonjs module
+
 ## 2023.1 - 2023/10/27
 
 - Rebase on Typescript

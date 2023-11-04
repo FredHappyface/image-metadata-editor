@@ -1,5 +1,9 @@
 /*
- * run with `npx tsc`
+ * run with:
+
+npx tsc -p tsconfig.json   # Generate ES6 modules
+npx tsc -p tsconfig.commonjs.json  # Generate CommonJS modules
+
  */
 
 import pkg from "crc-32";

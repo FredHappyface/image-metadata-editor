@@ -38,7 +38,7 @@ Get the MIME type of an image based on its magic bytes.
 
 #### Defined in
 
-index.ts:207
+[index.ts:210](https://github.com/FredHappyface/image-metadata-editor/blob/3ff895d/src/index.ts#L210)
 
 ___
 
@@ -71,7 +71,7 @@ If the value cannot be found
 
 #### Defined in
 
-index.ts:274
+[index.ts:277](https://github.com/FredHappyface/image-metadata-editor/blob/3ff895d/src/index.ts#L277)
 
 ___
 
@@ -101,7 +101,7 @@ If a marker is invalid
 
 #### Defined in
 
-index.ts:348
+[index.ts:351](https://github.com/FredHappyface/image-metadata-editor/blob/3ff895d/src/index.ts#L351)
 
 ___
 
@@ -133,7 +133,7 @@ If an unsupported image is used
 
 #### Defined in
 
-index.ts:328
+[index.ts:331](https://github.com/FredHappyface/image-metadata-editor/blob/3ff895d/src/index.ts#L331)
 
 ___
 
@@ -163,7 +163,7 @@ NotImplemented
 
 #### Defined in
 
-index.ts:157
+[index.ts:160](https://github.com/FredHappyface/image-metadata-editor/blob/3ff895d/src/index.ts#L160)
 
 ___
 
@@ -197,7 +197,7 @@ If a marker is invalid
 
 #### Defined in
 
-index.ts:90
+[index.ts:93](https://github.com/FredHappyface/image-metadata-editor/blob/3ff895d/src/index.ts#L93)
 
 ___
 
@@ -232,7 +232,7 @@ If using an unsupported text mode
 
 #### Defined in
 
-index.ts:23
+[index.ts:26](https://github.com/FredHappyface/image-metadata-editor/blob/3ff895d/src/index.ts#L26)
 
 ___
 
@@ -265,7 +265,7 @@ If a marker is invalid
 
 #### Defined in
 
-index.ts:135
+[index.ts:138](https://github.com/FredHappyface/image-metadata-editor/blob/3ff895d/src/index.ts#L138)
 
 ___
 
@@ -298,4 +298,4 @@ If an unsupported image is used
 
 #### Defined in
 
-index.ts:176
+[index.ts:179](https://github.com/FredHappyface/image-metadata-editor/blob/3ff895d/src/index.ts#L179)

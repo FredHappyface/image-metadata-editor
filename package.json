@@ -1,12 +1,21 @@
 {
 	"type": "module",
 	"name": "image-metadata-editor",
-	"version": "2023.1.0",
+	"version": "2023.1.1",
 	"description": "image-metadata-editor package is a versatile and cross-compatible tool for reading and writing metadata in various image formats. Interact with the metadata stored within images, including EXIF (Exchangeable Image File Format) data, XMP (Extensible Metadata Platform) information, and tEXt chunks in PNGs ",
-	"main": "src/index.js",
+	"module": "dist/index.js",
+	"main": "dist/commonjs/index.js",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"require": "./dist/commonjs/index.js"
+		},
+		"./src/index.ts": "./dist/index.js"
+	},
 	"scripts": {
-		"build": "npx tsc",
-		"test": "npx tsc && npx mocha && python3 ./getmeta.py",
+		"clean": "rimraf dist",
+		"build": "npm run clean && npx tsc && npx tsc -p tsconfig.commonjs.json",
+		"test": "npm run build && npx mocha && python3 ./getmeta.py",
 		"test-win": "npx tsc && npx mocha && py ./getmeta.py",
 		"docs": " npx typedoc --readme none --plugin typedoc-plugin-markdown --out documentation/reference src/index.ts",
 		"prepublish": "npm run build && npm run docs"
@@ -35,6 +44,7 @@
 	"devDependencies": {
 		"@types/pako": "^2.0.2",
 		"chai": "^4.3.10",
+		"rimraf": "^5.0.5",
 		"typedoc": "^0.25.2",
 		"typedoc-plugin-markdown": "^3.16.0",
 		"typescript": "^5.2.2"
@@ -44,5 +54,8 @@
 		"fast-xml-parser": "^4.3.2",
 		"node-webpmux": "^3.1.9",
 		"pako": "^2.1.0"
+	},
+	"engines": {
+		"node": ">=12"
 	}
 }

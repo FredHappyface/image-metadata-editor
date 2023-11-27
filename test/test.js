@@ -11,7 +11,7 @@ import {
   writeXMP,
   readPNGtext,
   readXMP,
-} from "../src/index.js";
+} from "../dist/index.js";
 
 describe("writePNGtEXt", () => {
   it("should add tEXt metadata to a PNG Uint8Array", async () => {

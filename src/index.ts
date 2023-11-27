@@ -10,8 +10,10 @@ import pkg from "crc-32";
 const { buf } = pkg;
 import fastXmlParser from "fast-xml-parser";
 import pako from "pako";
+
 // @ts-ignore
-import WebP from "node-webpmux";
+import { Image } from "./webp.cjs";
+import { cast2Uint8Array, typeCheck } from "./utils.js";
 
 /**
  * Writes tEXt metadata to a PNG Uint8Array.
@@ -142,9 +144,10 @@ export async function writeWebpXMP(image: Blob | Uint8Array, value: string) {
   if ((await getMimeType(imageArr)) !== "image/webp") {
     throw new TypeError("A webp is required to use writeWebpXMP");
   }
-  const img = new WebP.Image();
+  const img = new Image();
   await img.load(imageArr);
   img.xmp = new TextEncoder().encode(value);
+  // @ts-ignore
   const data = await img.save(null, { xmp: true });
   return data;
 }
@@ -158,7 +161,7 @@ export async function writeWebpXMP(image: Blob | Uint8Array, value: string) {
  *
  * @throws {TypeError} NotImplemented
  */
-export function writeExif(
+export async function writeExif(
   image: Blob | Uint8Array,
   key: string,
   value: string
@@ -235,38 +238,6 @@ export async function getMimeType(image: Blob | Uint8Array) {
 }
 
 /**
- *
- * @param {Blob|Uint8Array} blob - The image as a Blob or Uint8Array.
- * @returns {Promise<Uint8Array>} - The image as a Uint8Array
- *
- * @throws {TypeError} - if the arg is an invalid type
- */
-async function cast2Uint8Array(blob: Blob | Uint8Array) {
-  typeCheck(blob, [Blob, Uint8Array]);
-  if (blob instanceof Uint8Array) {
-    return blob;
-  }
-  const buffer = await new Response(blob).arrayBuffer();
-  return new Uint8Array(buffer);
-}
-
-/**
- *
- * @param elem {any}
- * @param types {any[]}
- */
-function typeCheck(elem: any, types: any[]) {
-  for (const _type of types) {
-    if (typeof elem === _type) {
-      return;
-    } else if (elem instanceof _type) {
-      return;
-    }
-  }
-  throw new TypeError(`This type is not supported :(: ${typeof elem}`);
-}
-
-/**
  * Reads tEXt metadata to a PNG Uint8Array.
  * @param {Blob|Uint8Array} image - The original PNG Uint8Array.
  * @param {string} key - The metadata key.
@@ -297,15 +268,15 @@ export async function readPNGtext(image: Blob | Uint8Array, key: string) {
   }
 
   const keyValueLen = imageArr.slice(readPosition, readPosition + 4);
-  const size = keyValueLen[3] + (keyValueLen[2] << 8) + (keyValueLen[1] << 16) + (keyValueLen[0] << 24)
+  const size =
+    keyValueLen[3] +
+    (keyValueLen[2] << 8) +
+    (keyValueLen[1] << 16) +
+    (keyValueLen[0] << 24);
 
-  const keyValueOffset = readPosition + 8
+  const keyValueOffset = readPosition + 8;
 
-  const keyValueBytes = imageArr.slice(
-	keyValueOffset,
-    keyValueOffset + size,
-  );
-
+  const keyValueBytes = imageArr.slice(keyValueOffset, keyValueOffset + size);
 
   if (mode === "zTXt") {
     const ValueBytes = keyValueBytes.slice(
@@ -319,8 +290,6 @@ export async function readPNGtext(image: Blob | Uint8Array, key: string) {
   return new TextDecoder().decode(ValueBytes);
 }
 
-
-
 /**
  * Reads XMP metadata to an image Uint8Array.
  * @param {Blob|Uint8Array} image - The original image Uint8Array.
@@ -330,18 +299,18 @@ export async function readPNGtext(image: Blob | Uint8Array, key: string) {
  * @throws {TypeError} If an unsupported image is used
  */
 export async function readXMP(image: Blob | Uint8Array) {
-	const imageArr = await cast2Uint8Array(image);
+  const imageArr = await cast2Uint8Array(image);
 
-	if ((await getMimeType(imageArr)) === "image/png") {
-	  return readPNGtext(imageArr, "XML:com.adobe.xmp");
-	}
-	if ((await getMimeType(imageArr)) === "image/webp") {
-	  return readWebpXMP(imageArr);
-	}
-	throw new TypeError("This image is not supported :(");
+  if ((await getMimeType(imageArr)) === "image/png") {
+    return readPNGtext(imageArr, "XML:com.adobe.xmp");
   }
+  if ((await getMimeType(imageArr)) === "image/webp") {
+    return readWebpXMP(imageArr);
+  }
+  throw new TypeError("This image is not supported :(");
+}
 
-  /**
+/**
  * Reads metadata to a Webp Uint8Array.
  * @param {Blob|Uint8Array} image - The original Webp Uint8Array.
  * @returns {string}
@@ -350,11 +319,11 @@ export async function readXMP(image: Blob | Uint8Array) {
  * @throws {TypeError} If a marker is invalid
  */
 export async function readWebpXMP(image: Blob | Uint8Array) {
-	const imageArr = await cast2Uint8Array(image);
-	if ((await getMimeType(imageArr)) !== "image/webp") {
-	  throw new TypeError("A webp is required to use readWebpXMP");
-	}
-	const img = new WebP.Image();
-	await img.load(imageArr);
-	return new TextDecoder().decode(img.xmp);
+  const imageArr = await cast2Uint8Array(image);
+  if ((await getMimeType(imageArr)) !== "image/webp") {
+    throw new TypeError("A webp is required to use readWebpXMP");
   }
+  const img = new Image();
+  await img.load(imageArr);
+  return new TextDecoder().decode(img.xmp);
+}

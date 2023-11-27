@@ -1,7 +1,7 @@
 {
 	"type": "module",
 	"name": "image-metadata-editor",
-	"version": "2023.1.1",
+	"version": "2023.2",
 	"description": "image-metadata-editor package is a versatile and cross-compatible tool for reading and writing metadata in various image formats. Interact with the metadata stored within images, including EXIF (Exchangeable Image File Format) data, XMP (Extensible Metadata Platform) information, and tEXt chunks in PNGs ",
 	"module": "dist/index.js",
 	"main": "dist/commonjs/index.js",
@@ -16,8 +16,8 @@
 		"clean": "rimraf dist",
 		"build": "npm run clean && npx tsc && npx tsc -p tsconfig.commonjs.json",
 		"test": "npm run build && npx mocha && python3 ./getmeta.py",
-		"test-win": "npx tsc && npx mocha && py ./getmeta.py",
-		"docs": " npx typedoc --readme none --plugin typedoc-plugin-markdown --out documentation/reference src/index.ts",
+		"test-win": "npm run build && npx mocha && py ./getmeta.py",
+		"docs": " npx typedoc --readme none --plugin typedoc-plugin-markdown --out documentation/reference src/*.ts",
 		"prepublish": "npm run build && npm run docs"
 	},
 	"repository": {
@@ -52,7 +52,6 @@
 	"dependencies": {
 		"crc-32": "^1.2.2",
 		"fast-xml-parser": "^4.3.2",
-		"node-webpmux": "^3.1.9",
 		"pako": "^2.1.0"
 	},
 	"engines": {

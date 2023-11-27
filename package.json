@@ -1,7 +1,7 @@
 {
 	"type": "module",
 	"name": "image-metadata-editor",
-	"version": "2023.2",
+	"version": "2023.2.0",
 	"description": "image-metadata-editor package is a versatile and cross-compatible tool for reading and writing metadata in various image formats. Interact with the metadata stored within images, including EXIF (Exchangeable Image File Format) data, XMP (Extensible Metadata Platform) information, and tEXt chunks in PNGs ",
 	"module": "dist/index.js",
 	"main": "dist/commonjs/index.js",

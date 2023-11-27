@@ -38,7 +38,7 @@ Get the MIME type of an image based on its magic bytes.
 
 #### Defined in
 
-[index.ts:214](https://github.com/FredHappyface/image-metadata-editor/blob/3ed1112/src/index.ts#L214)
+[index.ts:214](https://github.com/FredHappyface/image-metadata-editor/blob/4bc11cc/src/index.ts#L214)
 
 ___
 
@@ -71,7 +71,7 @@ If the value cannot be found
 
 #### Defined in
 
-[index.ts:249](https://github.com/FredHappyface/image-metadata-editor/blob/3ed1112/src/index.ts#L249)
+[index.ts:249](https://github.com/FredHappyface/image-metadata-editor/blob/4bc11cc/src/index.ts#L249)
 
 ___
 
@@ -101,7 +101,7 @@ If a marker is invalid
 
 #### Defined in
 
-[index.ts:321](https://github.com/FredHappyface/image-metadata-editor/blob/3ed1112/src/index.ts#L321)
+[index.ts:321](https://github.com/FredHappyface/image-metadata-editor/blob/4bc11cc/src/index.ts#L321)
 
 ___
 
@@ -133,7 +133,7 @@ If an unsupported image is used
 
 #### Defined in
 
-[index.ts:301](https://github.com/FredHappyface/image-metadata-editor/blob/3ed1112/src/index.ts#L301)
+[index.ts:301](https://github.com/FredHappyface/image-metadata-editor/blob/4bc11cc/src/index.ts#L301)
 
 ___
 
@@ -163,7 +163,7 @@ NotImplemented
 
 #### Defined in
 
-[index.ts:164](https://github.com/FredHappyface/image-metadata-editor/blob/3ed1112/src/index.ts#L164)
+[index.ts:164](https://github.com/FredHappyface/image-metadata-editor/blob/4bc11cc/src/index.ts#L164)
 
 ___
 
@@ -197,7 +197,7 @@ If a marker is invalid
 
 #### Defined in
 
-[index.ts:96](https://github.com/FredHappyface/image-metadata-editor/blob/3ed1112/src/index.ts#L96)
+[index.ts:96](https://github.com/FredHappyface/image-metadata-editor/blob/4bc11cc/src/index.ts#L96)
 
 ___
 
@@ -232,7 +232,7 @@ If using an unsupported text mode
 
 #### Defined in
 
-[index.ts:29](https://github.com/FredHappyface/image-metadata-editor/blob/3ed1112/src/index.ts#L29)
+[index.ts:29](https://github.com/FredHappyface/image-metadata-editor/blob/4bc11cc/src/index.ts#L29)
 
 ___
 
@@ -265,7 +265,7 @@ If a marker is invalid
 
 #### Defined in
 
-[index.ts:141](https://github.com/FredHappyface/image-metadata-editor/blob/3ed1112/src/index.ts#L141)
+[index.ts:141](https://github.com/FredHappyface/image-metadata-editor/blob/4bc11cc/src/index.ts#L141)
 
 ___
 
@@ -298,4 +298,4 @@ If an unsupported image is used
 
 #### Defined in
 
-[index.ts:183](https://github.com/FredHappyface/image-metadata-editor/blob/3ed1112/src/index.ts#L183)
+[index.ts:183](https://github.com/FredHappyface/image-metadata-editor/blob/4bc11cc/src/index.ts#L183)

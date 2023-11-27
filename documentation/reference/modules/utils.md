@@ -33,7 +33,7 @@
 
 #### Defined in
 
-utils.ts:8
+[utils.ts:8](https://github.com/FredHappyface/image-metadata-editor/blob/4bc11cc/src/utils.ts#L8)
 
 ___
 
@@ -54,4 +54,4 @@ ___
 
 #### Defined in
 
-utils.ts:22
+[utils.ts:22](https://github.com/FredHappyface/image-metadata-editor/blob/4bc11cc/src/utils.ts#L22)
